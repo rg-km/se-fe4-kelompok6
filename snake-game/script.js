@@ -1,7 +1,7 @@
 const CELL_SIZE = 15;
 const CANVAS_WIDTH = 900;
 const CANVAS_HEIGHT = 420;
-const REDRAW_INTERVAL = 50;
+let REDRAW_INTERVAL = 50;
 const WIDTH = CANVAS_WIDTH / CELL_SIZE;
 const HEIGHT = CANVAS_HEIGHT / CELL_SIZE;
 const DIRECTION = {
@@ -34,14 +34,13 @@ function initDirection() {
     return Math.floor(Math.random() * 4);
 }
 
-function initSnake(color) {
+function initSnake() {
     return {
-        color: color,
         ...initHeadAndBody(),
         direction: initDirection()
     }
 }
-let snake1 = initSnake("purple");
+let snake1 = initSnake();
 
 let apple = {
     position: initPosition(),
@@ -80,6 +79,22 @@ const apel = new Image();
 apel.onload = draw;
 apel.src = 'assets/gambar/apple.png';
 
+let kepala_ular_kekiri = new Image();
+kepala_ular_kekiri.onload = draw;
+kepala_ular_kekiri.src = 'assets/gambar/kepala_kekiri.png';
+
+let kepala_ular_kekanan = new Image();
+kepala_ular_kekanan.onload = draw;
+kepala_ular_kekanan.src = 'assets/gambar/kepala_kekanan.png';
+
+let kepala_ular_keatas = new Image();
+kepala_ular_keatas.onload = draw;
+kepala_ular_keatas.src = 'assets/gambar/kepala_keatas.png';
+
+let kepala_ular_kebawah = new Image();
+kepala_ular_kebawah.onload = draw;
+kepala_ular_kebawah.src = 'assets/gambar/kepala_kebawah.png';
+
 function draw() {
     setInterval(function() {
         let snakeCanvas = document.getElementById("snakeBoard");
@@ -87,7 +102,19 @@ function draw() {
 
         ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
         
-        drawCell(ctx, snake1.head.x, snake1.head.y, snake1.color);
+        if(snake1.direction === DIRECTION.LEFT) {
+            REDRAW_INTERVAL = WIDTH;
+            drawCellWithImage(kepala_ular_kekiri, ctx, snake1.head.x, snake1.head.y);
+        } else if(snake1.direction === DIRECTION.RIGHT) {
+            REDRAW_INTERVAL = WIDTH;
+            drawCellWithImage(kepala_ular_kekanan, ctx, snake1.head.x, snake1.head.y);
+        } else if(snake1.direction === DIRECTION.UP) {
+            REDRAW_INTERVAL = HEIGHT;
+            drawCellWithImage(kepala_ular_keatas, ctx, snake1.head.x, snake1.head.y);
+        } else if(snake1.direction === DIRECTION.DOWN) {
+            REDRAW_INTERVAL = HEIGHT;
+            drawCellWithImage(kepala_ular_kebawah, ctx, snake1.head.x, snake1.head.y);
+        }
         for (let i = 1; i < snake1.body.length; i++) {
             if (i % 2 == 0) {
                 drawCell(ctx, snake1.body[i].x, snake1.body[i].y, "#a4b4f1");
@@ -168,7 +195,7 @@ function checkCollision(snakes) {
     }
     if (isCollide) {
         alert("Game over");
-        snake1 = initSnake("purple");
+        snake1 = initSnake();
     }
     return isCollide;
 }
