@@ -89,7 +89,11 @@ function draw() {
         
         drawCell(ctx, snake1.head.x, snake1.head.y, snake1.color);
         for (let i = 1; i < snake1.body.length; i++) {
-            drawCell(ctx, snake1.body[i].x, snake1.body[i].y, snake1.color);
+            if (i % 2 == 0) {
+                drawCell(ctx, snake1.body[i].x, snake1.body[i].y, "#a4b4f1");
+            } else {
+                drawCell(ctx, snake1.body[i].x, snake1.body[i].y, "#5c7cfc");
+            }
         }
         drawCellWithImage(apel, ctx, apple.position.x, apple.position.y);
         drawCellWithImage(apel, ctx, apple2.position.x, apple2.position.y);
