@@ -10,6 +10,7 @@ const DIRECTION = {
     UP: 2,
     DOWN: 3,
 }
+//elemen
 let MOVE_INTERVAL = 120;
 let nyawa = 3;
 let level = 1;
