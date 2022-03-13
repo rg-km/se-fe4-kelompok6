@@ -298,6 +298,13 @@ function draw() {
         drawScore(snake1);
         drawSpeed();
 
+        if(nyawa < 1) {
+            alert("Game Over");
+            MOVE_INTERVAL = 120;
+            nyawa = 3;
+            level = 1;
+            score = 0;
+        }
     }, REDRAW_INTERVAL);
 }
 
@@ -397,7 +404,7 @@ function checkCollision(snakes) {
     }
     if (isCollide) {
         suara_nyawa_berkurang.play();
-        alert("Game over");
+        nyawa--;
         snake1 = initSnake();
     }
     return isCollide;
