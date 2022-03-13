@@ -60,15 +60,15 @@ function drawCell(ctx, x, y, color) {
     ctx.fillStyle = color;
     ctx.fillRect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
 }
-
+//draw apple
 function drawCellWithImage(img, ctx, x, y) {
-    ctx.drawImage(img, x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE); //draw apple
+    ctx.drawImage(img, x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE); 
 }
 
 function drawNyawa(img, ctx, x, y) {
     ctx.drawImage(img, x, y, 20, 20);
 }
-
+//sound
 var suara_mati = new Audio('assets/suara/game-over.mp3');
 var suara_makan = new Audio('assets/suara/suara_makan.wav');
 var suara_nambah_level = new Audio('assets/suara/nambah_level.mp3');
@@ -97,7 +97,7 @@ function leveling(ctx) {
         ok = false;
     }
 }
-
+//rintangan
 function tantangan(ctx) {
     if (level === 2) {
         buatTantanganHorizontal(ctx, 0, WIDTH -0, 0);
@@ -160,7 +160,7 @@ function buatTantanganVertical(ctx, x, panjang, y) {
         antisipasi(hati, x, i);
     }
 }
-
+//level
 function buatLevelBaru(levelnya, kecepatannya) {
     if(ok == false) {
         alert("Level " + level + " Complete");
@@ -209,7 +209,7 @@ function drawSpeed() {
     levelCtx.textAlign = "center";
     levelCtx.fillText("Speed :" + MOVE_INTERVAL + ".ms", 450, 15);
 }
-
+//gambar
 const apel = new Image();
 apel.onload = draw;
 apel.src = 'assets/gambar/apple.png';
