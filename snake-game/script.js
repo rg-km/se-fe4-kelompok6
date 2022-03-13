@@ -74,6 +74,7 @@ var suara_nambah_level = new Audio('assets/suara/nambah_level.mp3');
 
 let ok = false;
 function leveling(ctx) {
+    tantangan(ctx);
     if (score === 5) {
         buatLevelBaru(2, 100);
     } else if (score === 10) {
@@ -92,6 +93,59 @@ function leveling(ctx) {
         score = 0;
     } else {
         ok = false;
+    }
+}
+
+function tantangan(ctx) {
+    if (level === 2) {
+        buatTantanganHorizontal(ctx, 0, WIDTH -0, 0);
+        buatTantanganHorizontal(ctx, 0, WIDTH -0, HEIGHT -1);
+        buatTantanganVertical(ctx, 0, HEIGHT - 0, 0);
+        buatTantanganVertical(ctx, WIDTH - 1, HEIGHT - 0, 0);
+    } else if (level === 3) {
+        buatTantanganHorizontal(ctx, 0, WIDTH -0, 0);
+        buatTantanganHorizontal(ctx, 0, WIDTH -0, HEIGHT -1);
+        buatTantanganHorizontal(ctx, 10, WIDTH - 10, 4);
+        buatTantanganHorizontal(ctx, 10, WIDTH - 10, HEIGHT -4);
+        buatTantanganVertical(ctx, WIDTH/2 - WIDTH/6, HEIGHT - 9, 9);
+        buatTantanganVertical(ctx, WIDTH/2 + WIDTH/6, HEIGHT - 9, 9);
+        buatTantanganVertical(ctx, 0, HEIGHT - 17, 0);
+        buatTantanganVertical(ctx, WIDTH - 1, HEIGHT - 17, 0);
+        buatTantanganVertical(ctx, 0, HEIGHT - 0, 17);
+        buatTantanganVertical(ctx, WIDTH - 1, HEIGHT - 0, 17);
+    } else if (level === 4) {
+        buatTantanganHorizontal(ctx, 10, WIDTH - 10, 4);
+        buatTantanganHorizontal(ctx, 10, WIDTH - 10, HEIGHT -4);
+    }else if (level === 5) {
+        buatTantanganHorizontal(ctx, 0, WIDTH -0, 0);
+        buatTantanganHorizontal(ctx, 0, WIDTH -0, HEIGHT -1);
+        buatTantanganVertical(ctx, 10, HEIGHT - 0, 5);
+        buatTantanganVertical(ctx, 30, HEIGHT - 5, 5);
+        buatTantanganVertical(ctx, WIDTH - 10, HEIGHT - 5, 0);
+    }
+}
+
+function buatTantanganHorizontal(ctx, x, panjang, y) {
+    let warna_penghalang = "orange";
+    for (let i = x; i < panjang; i++) {
+        drawCell(ctx, i, y, warna_penghalang);
+        if (snake1.head.x == i && snake1.head.y == y) {
+            nyawa--;
+            snake1 = initSnake();
+            initGame();
+        }
+    }
+}
+
+function buatTantanganVertical(ctx, x, panjang, y) {
+    let warna_penghalang = "orange";
+    for (let i = y; i < panjang; i++) {
+        drawCell(ctx, x, i, warna_penghalang);
+        if (snake1.head.x == x && snake1.head.y == i) {
+            nyawa--;
+            snake1 = initSnake();
+            initGame();
+        }
     }
 }
 
