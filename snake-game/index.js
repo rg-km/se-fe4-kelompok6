@@ -12,6 +12,7 @@ const DIRECTION = {
 }
 let MOVE_INTERVAL = 120;
 let score = 0;
+let level = 1;
 let colorText = "black";
 
 function initPosition() {
@@ -71,13 +72,51 @@ var suara_nambah_level = new Audio('assets/suara/nambah_level.mp3');
 var suara_nyawa_berkurang = new Audio('assets/suara/nyawa_berkurang.wav');
 
 let ok = false;
-
+function leveling(ctx) {
+    if (score === 5) {
+        buatLevelBaru(2, 100);
+    } else if (score === 10) {
+        buatLevelBaru(3, 80);
+    } else if (score === 15) {
+        buatLevelBaru(4, 60);
+    } else if (score === 20) {
+        buatLevelBaru(5, 40);
+    } else if (score === 25) {
+        buatLevelBaru(6, 20);
+        snake1 = initSnake("red");
+        initGame();
+        MOVE_INTERVAL = 120;
+        level = 1;
+        score = 0;
+    } else {
+        ok = false;
+    }
+}
 
 
 function antisipasi(object, i, y) {
     if (object.position.x === i && object.position.y === y) {
         object.position = initPosition();
     }
+}
+function buatLevelBaru(levelnya) {
+    if(ok == false) {
+        alert("Level " + level + " Complete");
+        suara_nambah_level.play();
+        ok = true;
+    }
+    level = levelnya;
+}
+
+function drawLevel() {
+    let levelCanvas = document.getElementById("level");
+    let levelCtx = levelCanvas.getContext("2d");
+
+    levelCtx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+    levelCtx.font = "15px Arial";
+    levelCtx.fillStyle = colorText;
+    levelCtx.textAlign = "center";
+    levelCtx.fillText("Snake Game - Level:" + level, 450, 15);
 }
 
 function drawScore(snake) {
@@ -94,13 +133,12 @@ function drawScore(snake) {
     }
 }
 
+
+
 const apel = new Image();
 apel.onload = draw;
 apel.src = 'assets/gambar/apple.png';
 
-const gambar_nyawa = new Image();
-gambar_nyawa.onload = draw;
-gambar_nyawa.src = 'assets/gambar/nyawa.png';
 
 let kepala_ular_kekiri = new Image();
 kepala_ular_kekiri.onload = draw;
@@ -125,7 +163,7 @@ function draw() {
 
         ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
         
-       
+        leveling(ctx);
         if(snake1.direction === DIRECTION.LEFT) {
             REDRAW_INTERVAL = WIDTH;
             drawApel(kepala_ular_kekiri, ctx, snake1.head.x, snake1.head.y);
@@ -150,6 +188,7 @@ function draw() {
         drawApel(apel, ctx, apple.position.x, apple.position.y);
         drawApel(apel, ctx, apple2.position.x, apple2.position.y);
 
+        drawLevel();
         drawScore(snake1);
         
 
