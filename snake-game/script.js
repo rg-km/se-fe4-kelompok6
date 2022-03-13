@@ -10,7 +10,7 @@ const DIRECTION = {
     UP: 2,
     DOWN: 3,
 }
-let MOVE_INTERVAL = 150;
+let MOVE_INTERVAL = 120;
 let score = 0;
 let colorText = "black";
 let nyawa = 3;
@@ -133,6 +133,17 @@ function drawScore(snake) {
     }
 }
 
+function drawSpeed() {
+    let levelCanvas = document.getElementById("speed");
+    let levelCtx = levelCanvas.getContext("2d");
+
+    levelCtx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+    levelCtx.font = "15px Arial";
+    levelCtx.fillStyle = colorText;
+    levelCtx.textAlign = "center";
+    levelCtx.fillText("Speed :" + MOVE_INTERVAL + ".ms", 450, 15);
+}
+
 const apel = new Image();
 apel.onload = draw;
 apel.src = 'assets/gambar/apple.png';
@@ -216,6 +227,8 @@ function draw() {
 
         drawLevel();
         drawScore(snake1);
+        drawSpeed();
+
     }, REDRAW_INTERVAL);
 }
 
