@@ -99,13 +99,14 @@ function antisipasi(object, i, y) {
         object.position = initPosition();
     }
 }
-function buatLevelBaru(levelnya) {
+function buatLevelBaru(levelnya, kecepatannya) {
     if(ok == false) {
         alert("Level " + level + " Complete");
         suara_nambah_level.play();
         ok = true;
     }
     level = levelnya;
+    MOVE_INTERVAL = kecepatannya;
 }
 
 function drawLevel() {
@@ -133,7 +134,16 @@ function drawScore(snake) {
     }
 }
 
+function drawSpeed() {
+    let levelCanvas = document.getElementById("speed");
+    let levelCtx = levelCanvas.getContext("2d");
 
+    levelCtx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+    levelCtx.font = "15px Arial";
+    levelCtx.fillStyle = colorText;
+    levelCtx.textAlign = "center";
+    levelCtx.fillText("Speed :" + MOVE_INTERVAL + ".ms", 450, 15);
+}
 
 const apel = new Image();
 apel.onload = draw;
@@ -190,7 +200,7 @@ function draw() {
 
         drawLevel();
         drawScore(snake1);
-        
+        drawSpeed();
 
     }, REDRAW_INTERVAL);
 }
