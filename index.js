@@ -76,6 +76,7 @@ var suara_nyawa_berkurang = new Audio('assets/suara/nyawa_berkurang.wav');
 
 let ok = false;
 function leveling(ctx) {
+    tantangan(ctx);
     if (score === 5) {
         buatLevelBaru(2, 100);
     } else if (score === 10) {
@@ -98,11 +99,69 @@ function leveling(ctx) {
 }
 
 
+function tantangan(ctx) {
+    if (level === 2) {
+        buatTantanganHorizontal(ctx, 0, WIDTH -0, 0);
+        buatTantanganHorizontal(ctx, 0, WIDTH -0, HEIGHT -1);
+        buatTantanganVertical(ctx, 0, HEIGHT - 0, 0);
+        buatTantanganVertical(ctx, WIDTH - 1, HEIGHT - 0, 0);
+    } else if (level === 3) {
+        buatTantanganVertical(ctx, 5, HEIGHT - 4, 6);
+        buatTantanganVertical(ctx, WIDTH - 5, HEIGHT - 4, 6);
+        buatTantanganVertical(ctx, WIDTH/2 - WIDTH/6, HEIGHT - 9, 9);
+        buatTantanganVertical(ctx, WIDTH/2 + WIDTH/6, HEIGHT - 9, 9);
+    } else if (level === 4) {
+        buatTantanganVertical(ctx, 5, HEIGHT - 4, 6);
+        buatTantanganVertical(ctx, WIDTH - 5, HEIGHT - 4, 6);
+        buatTantanganHorizontal(ctx, 10, WIDTH - 10, 4);
+        buatTantanganHorizontal(ctx, 10, WIDTH - 10, HEIGHT -4);
+    }else if (level === 5) {
+        buatTantanganHorizontal(ctx, 0, WIDTH -0, 0);
+        buatTantanganHorizontal(ctx, 0, WIDTH -0, HEIGHT -1);
+        buatTantanganVertical(ctx, 10, HEIGHT - 0, 5);
+        buatTantanganVertical(ctx, 30, HEIGHT - 5, 5);
+        buatTantanganVertical(ctx, WIDTH - 10, HEIGHT - 5, 0);
+    }
+}
+
+function buatTantanganHorizontal(ctx, x, panjang, y) {
+    let warna_penghalang = "orange";
+    for (let i = x; i < panjang; i++) {
+        drawCell(ctx, i, y, warna_penghalang);
+        if (snake1.head.x == i && snake1.head.y == y) {
+                suara_nyawa_berkurang.play();
+                nyawa--;
+            snake1 = initSnake("red");
+            initGame();
+        }
+        antisipasi(apple, i, y);
+        antisipasi(apple2, i, y);
+        antisipasi(hati, i, y);
+    }
+}
+
 function antisipasi(object, i, y) {
     if (object.position.x === i && object.position.y === y) {
         object.position = initPosition();
     }
 }
+
+function buatTantanganVertical(ctx, x, panjang, y) {
+    let warna_penghalang = "orange";
+    for (let i = y; i < panjang; i++) {
+        drawCell(ctx, x, i, warna_penghalang);
+        if (snake1.head.x == x && snake1.head.y == i) {
+            suara_nyawa_berkurang.play();
+            nyawa--;
+            snake1 = initSnake("red");
+            initGame();
+        }
+        antisipasi(apple, x, i);
+        antisipasi(apple2, x, i);
+        antisipasi(hati, x, i);
+    }
+}
+
 function buatLevelBaru(levelnya, kecepatannya) {
     if(ok == false) {
         alert("Level " + level + " Complete");
