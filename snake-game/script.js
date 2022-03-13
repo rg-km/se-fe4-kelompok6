@@ -11,6 +11,8 @@ const DIRECTION = {
     DOWN: 3,
 }
 const MOVE_INTERVAL = 150;
+let score = 0;
+let colorText = "black";
 
 function initPosition() {
     return {
@@ -36,8 +38,7 @@ function initSnake(color) {
     return {
         color: color,
         ...initHeadAndBody(),
-        direction: initDirection(),
-        score: 0,
+        direction: initDirection()
     }
 }
 let snake1 = initSnake("purple");
@@ -58,8 +59,12 @@ function drawScore(snake) {
 
     scoreCtx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
     scoreCtx.font = "30px Arial";
-    scoreCtx.fillStyle = snake.color
-    scoreCtx.fillText(snake.score, 10, scoreCanvas.scrollHeight / 2);
+    scoreCtx.fillStyle = colorText;
+    if (score >= 10) {
+        scoreCtx.fillText(score, 20, 40);
+    } else {
+        scoreCtx.fillText(score, 30, 40);
+    }
 }
 
 function draw() {
@@ -97,7 +102,7 @@ function teleport(snake) {
 function eat(snake, apple) {
     if (snake.head.x == apple.position.x && snake.head.y == apple.position.y) {
         apple.position = initPosition();
-        snake.score++;
+        score++;
         snake.body.push({x: snake.head.x, y: snake.head.y});
     }
 }
