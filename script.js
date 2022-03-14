@@ -127,6 +127,10 @@ function tantangan(ctx) {
     }
 }
 
+let tantanganPosition = {
+    position: initPosition()
+}
+
 function buatTantanganHorizontal(ctx, x, panjang, y) {
     let warna_penghalang = "orange";
     for (let i = x; i < panjang; i++) {
@@ -140,6 +144,8 @@ function buatTantanganHorizontal(ctx, x, panjang, y) {
         antisipasi(apple, i, y);
         antisipasi(apple2, i, y);
         antisipasi(hati, i, y);
+        tantanganPosition.position.x = i;
+        tantanganPosition.position.y = y;
     }
 }
 
@@ -153,14 +159,16 @@ function buatTantanganVertical(ctx, x, panjang, y) {
             snake1 = initSnake();
             initGame();
         }
-        antisipasi(apple, i, y);
-        antisipasi(apple2, i, y);
-        antisipasi(hati, i, y);
+        antisipasi(apple, x, i);
+        antisipasi(apple2, x, i);
+        antisipasi(hati, x, i);
+        tantanganPosition.position.x = x;
+        tantanganPosition.position.y = i;
     }
 }
 
-function antisipasi(object, i, y) {
-    if (object.position.x === i && object.position.y === y) {
+function antisipasi(object, x, y) {
+    if (object.position.x === x && object.position.y === y) {
         object.position = initPosition();
     }
 }
@@ -351,9 +359,10 @@ function moveLeft(snake) {
     eat(snake, apple2);
     if (cekPrima(score)) {
         makanHati(snake);
-    } else {
-        hati.position = initPosition();
     }
+    antisipasi(apple, tantanganPosition.position.x, tantanganPosition.position.y);
+    antisipasi(apple2, tantanganPosition.position.x, tantanganPosition.position.y);
+    antisipasi(hati, tantanganPosition.position.x, tantanganPosition.position.y);
 }
 
 function moveRight(snake) {
@@ -363,9 +372,10 @@ function moveRight(snake) {
     eat(snake, apple2);
     if (cekPrima(score)) {
         makanHati(snake);
-    } else {
-        hati.position = initPosition();
     }
+    antisipasi(apple, tantanganPosition.position.x, tantanganPosition.position.y);
+    antisipasi(apple2, tantanganPosition.position.x, tantanganPosition.position.y);
+    antisipasi(hati, tantanganPosition.position.x, tantanganPosition.position.y);
 }
 
 function moveDown(snake) {
@@ -375,9 +385,10 @@ function moveDown(snake) {
     eat(snake, apple2);
     if (cekPrima(score)) {
         makanHati(snake);
-    } else {
-        hati.position = initPosition();
     }
+    antisipasi(apple, tantanganPosition.position.x, tantanganPosition.position.y);
+    antisipasi(apple2, tantanganPosition.position.x, tantanganPosition.position.y);
+    antisipasi(hati, tantanganPosition.position.x, tantanganPosition.position.y);
 }
 
 function moveUp(snake) {
@@ -387,9 +398,10 @@ function moveUp(snake) {
     eat(snake, apple2);
     if (cekPrima(score)) {
         makanHati(snake);
-    } else {
-        hati.position = initPosition();
     }
+    antisipasi(apple, tantanganPosition.position.x, tantanganPosition.position.y);
+    antisipasi(apple2, tantanganPosition.position.x, tantanganPosition.position.y);
+    antisipasi(hati, tantanganPosition.position.x, tantanganPosition.position.y);
 }
 
 function checkCollision(snakes) {
